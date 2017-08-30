@@ -44,3 +44,12 @@ Programming a device
 2. Select COM port from drop-down box  
 3. Select Baud rate  
 4. Observe progress and/or status messages  
+
+### Save file format
+A single JSON object containing the following fields:  
+- Cube width
+- Cube length
+- Cube height
+- Number of frames
+- Array of frame durations in milliseconds. Has length "number of frames".
+- Array of frame arrays. Has length "number of frames", where each item is an array of "cube height" arrays of "cube length" arrays of length "cube width".
