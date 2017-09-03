@@ -15,9 +15,9 @@ namespace LED_Cube_Utility {
 		static void Main() {
 			Application.EnableVisualStyles();
 			Application.SetCompatibleTextRenderingDefault(false);
-			Application.Run(new Form1());
+			Application.Run(new MainForm());
 
-			Console.Write(new string('\n', 5));
+			/*Console.Write(new string('\n', 5));
 
 			Led3dAnimation l3a = new Led3dAnimation(5, 5, 5);
 			l3a.AddFrame(1);
@@ -44,6 +44,7 @@ namespace LED_Cube_Utility {
 			} else {
 				Console.WriteLine("FAIL");
 			}
+		}*/
 		}
 	}
 }
