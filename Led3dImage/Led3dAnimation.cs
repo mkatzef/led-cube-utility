@@ -100,6 +100,19 @@ namespace Led3dImage
 		}
 
 		/// <summary>
+		/// Sets the amount of time for which the specified frame should be displayed in a looped animation.
+		/// </summary>
+		/// <param name="index">The index (in [0, animation length - 1]) of the frame to be modified.</param>
+		/// <param name="durationMillis">The amount of time (in milliseconds) to display the specified frame.</param>
+		public void SetFrameDuration(int index, int durationMillis) {
+			if (index >= 0 && index < AnimationUnits.Count()) {
+				AnimationUnit tempAU = AnimationUnits[index];
+				tempAU.durationMillis = (uint)durationMillis;
+				AnimationUnits[index] = tempAU;
+			}
+		}
+
+		/// <summary>
 		/// Returns the reference to the frame object at the given index, for direct manipulation.
 		/// </summary>
 		/// <param name="index">The index (in [0, animation length - 1]) of the frame to return.</param>
@@ -144,8 +157,45 @@ namespace Led3dImage
 		/// </summary>
 		/// <param name="jsonString">A string containing a Led3dAnimation object serialized as JSON.</param>
 		/// <returns>The Led3dAnimation object described by the given string.</returns>
-		static Led3dAnimation FromJson(String jsonString) {
-			throw (new NotImplementedException("FromJson"));
+		public static Led3dAnimation FromJson(String jsonString) {
+			JObject jo = JObject.Parse(jsonString);
+			int width = (int)jo.SelectToken("Width");
+			int length = (int)jo.SelectToken("Length");
+			int height = (int)jo.SelectToken("Height");
+
+			Led3dAnimation animation = new Led3dAnimation(width, length, height);
+
+			int frameCount = (int)jo.SelectToken("FrameCount");
+
+			animation.DelFrame(0);
+			for (int frameIndex = 0; frameIndex < frameCount; frameIndex++) {
+				animation.AddFrame(frameIndex);
+				Led3dFrame frame = animation.GetFrame(frameIndex);
+				JObject animationUnitObject = (JObject)jo.SelectToken("Frame" + frameIndex);
+
+				int durationMillis = (int)animationUnitObject.SelectToken("Duration");
+				animation.SetFrameDuration(frameIndex, durationMillis);
+
+				for (int heightIndex = 0; heightIndex < height; heightIndex++) {
+					Led3dFrameLayer frameLayer = frame.GetLed3dFrameLayer(heightIndex);
+
+					JObject frameLayerObject = (JObject)animationUnitObject.SelectToken("Layer" + heightIndex);
+					JArray frameLayerArray = (JArray)frameLayerObject.SelectToken("Image");
+
+					int rowIndex = 0;
+					foreach (JArray rowArray in frameLayerArray) {
+						int colIndex = 0;
+						foreach (bool element in rowArray) {
+							frameLayer.SetPixel(colIndex, rowIndex, element);
+							colIndex++;
+						}
+						rowIndex++;
+					}
+				}
+
+			}
+
+			return animation;
 		}
     }
 }
