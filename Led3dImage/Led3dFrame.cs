@@ -56,6 +56,20 @@ namespace Led3dImage
 			}
 		}
 
+		public Led3dFrame(JObject jsonFrame) {
+			Width = (uint)jsonFrame.SelectToken("Width");
+			Length = (uint)jsonFrame.SelectToken("Length");
+			Height = (uint)jsonFrame.SelectToken("Height");
+
+			Led3dFrameLayers = new List<Led3dFrameLayer>((int)Height);
+			for (int heightIndex = 0; heightIndex < Height; heightIndex++) {
+				JObject layerObject = (JObject)jsonFrame.SelectToken("Layer" + heightIndex);
+				layerObject.Add(new JProperty("Width", Width));
+				layerObject.Add(new JProperty("Length", Length));
+				Led3dFrameLayers.Add(new Led3dFrameLayer(layerObject));
+			}
+		}
+
 		/// <summary>
 		/// Returns a reference to the Led3dFrameLayer object at the given height.
 		/// </summary>

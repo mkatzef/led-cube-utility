@@ -235,7 +235,12 @@ namespace LED_Cube_Utility {
 				return;
 			}
 
-			ErrorPopUp("Not implemented.");
+			for (int verticalIndex = 0; verticalIndex < Animation.Length; verticalIndex++) {
+				for (int horizontalIndex = 0; horizontalIndex < Animation.Width; horizontalIndex++) {
+					AnimationLayer.SetPixel(horizontalIndex, verticalIndex, true);
+				}
+			}
+			RecolorButtons();
 		}
 
 		private void buttonClearLayer_Click(object sender, EventArgs e) {
@@ -244,19 +249,42 @@ namespace LED_Cube_Utility {
 				return;
 			}
 
-			ErrorPopUp("Not implemented.");
+			for (int verticalIndex = 0; verticalIndex < Animation.Length; verticalIndex++) {
+				for (int horizontalIndex = 0; horizontalIndex < Animation.Width; horizontalIndex++) {
+					AnimationLayer.SetPixel(horizontalIndex, verticalIndex, false);
+				}
+			}
+			RecolorButtons();
 		}
 
 		private void buttonFrameRight_Click(object sender, EventArgs e) {
+			if (Animation == null) {
+				ErrorPopUp("No animation active.");
+				return;
+			}
 
+			int resultingFrame = AnimationFrameIndex + 1;
+			if (resultingFrame < Animation.GetFrameCount()) {
+				AnimationFrameIndex++;
+				ChangeAnimationFrame(AnimationFrameIndex);
+			}
 		}
 
 		private void buttonFrameLeft_Click (object sender, EventArgs e) {
+			if (Animation == null) {
+				ErrorPopUp("No animation active.");
+				return;
+			}
 
+			int resultingFrame = AnimationFrameIndex - 1;
+			if (resultingFrame >= 0) {
+				AnimationFrameIndex--;
+				ChangeAnimationFrame(AnimationFrameIndex);
+			}
 		}
 
 		private void buttonFrameTime_Click(object sender, EventArgs e) {
-
+			ErrorPopUp("Not implemented.");
 		}
 	}
 }

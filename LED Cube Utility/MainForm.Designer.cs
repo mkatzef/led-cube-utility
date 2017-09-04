@@ -193,6 +193,7 @@
 			this.buttonClearLayer.TabIndex = 15;
 			this.buttonClearLayer.Text = "Clear Layer";
 			this.buttonClearLayer.UseVisualStyleBackColor = true;
+			this.buttonClearLayer.Click += new System.EventHandler(this.buttonClearLayer_Click);
 			// 
 			// buttonFillLayer
 			// 
@@ -203,6 +204,7 @@
 			this.buttonFillLayer.TabIndex = 14;
 			this.buttonFillLayer.Text = "Fill Layer";
 			this.buttonFillLayer.UseVisualStyleBackColor = true;
+			this.buttonFillLayer.Click += new System.EventHandler(this.buttonFillLayer_Click);
 			// 
 			// buttonLayerDown
 			// 
@@ -256,6 +258,7 @@
 			this.buttonFrameLeft.TabIndex = 9;
 			this.buttonFrameLeft.Text = "Frame Left";
 			this.buttonFrameLeft.UseVisualStyleBackColor = true;
+			this.buttonFrameLeft.Click += new System.EventHandler(this.buttonFrameLeft_Click);
 			// 
 			// buttonFrameTime
 			// 
@@ -266,6 +269,7 @@
 			this.buttonFrameTime.TabIndex = 8;
 			this.buttonFrameTime.Text = "Frame Time";
 			this.buttonFrameTime.UseVisualStyleBackColor = true;
+			this.buttonFrameTime.Click += new System.EventHandler(this.buttonFrameTime_Click);
 			// 
 			// panelLayerGrid
 			// 

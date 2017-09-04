@@ -42,6 +42,25 @@ namespace Led3dImage
 		}
 
 		/// <summary>
+		/// Generates the corresponding Led3dFrameLayer object from a given JObject.
+		/// </summary>
+		/// <param name="jsonLayer">A populated JObject.</param>
+		public Led3dFrameLayer(JObject jsonLayer) {
+			Width = (uint)jsonLayer.SelectToken("Width");
+			Length = (uint)jsonLayer.SelectToken("Length");
+
+			PixelArray = new bool[Width, Length];
+
+			JArray image = (JArray)jsonLayer.SelectToken("Image");
+
+			for (int rowIndex = 0; rowIndex < Length; rowIndex++) {
+				for (int colIndex = 0; colIndex < Width; colIndex++) {
+					PixelArray[colIndex, rowIndex] = (bool)((JArray)image[rowIndex])[colIndex];
+				}
+			}
+		}
+
+		/// <summary>
 		/// Assigns the given value to the pixel at the given index, where 0,0 is top-left.
 		/// </summary>
 		/// <param name="colIndex">The pixel index in the horizontal direction.</param>

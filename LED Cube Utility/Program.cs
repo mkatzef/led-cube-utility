@@ -43,8 +43,62 @@ namespace LED_Cube_Utility {
 				Console.WriteLine("PASS");
 			} else {
 				Console.WriteLine("FAIL");
-			}
-		}*/
+			}*/
+
+			//Test layer
+			/*Console.Write(new string('\n', 5));
+			Led3dFrameLayer a = new Led3dFrameLayer(5, 5);
+			a.SetPixel(3, 2, true);
+			JObject b = a.ToJson();
+			string t1 = b.ToString();
+			Console.WriteLine(t1);
+
+			Console.Write(new string('\n', 5));
+
+			Led3dFrameLayer c = new Led3dFrameLayer(b);
+			string t2 = c.ToJson().ToString();
+			Console.WriteLine(t2);
+
+
+			Console.Write(new string('\n', 5));
+			Console.WriteLine(t1 == t2);*/
+
+			//Test frame
+			/*Console.Write(new string('\n', 5));
+			Led3dFrame a = new Led3dFrame(5, 5, 5);
+			a.GetLed3dFrameLayer(2).SetPixel(3, 2, true);
+			JObject b = a.ToJson();
+			string t1 = b.ToString();
+			Console.WriteLine(t1);
+
+			Console.Write(new string('\n', 5));
+
+			Led3dFrame c = new Led3dFrame(b);
+			string t2 = c.ToJson().ToString();
+			Console.WriteLine(t2);
+
+
+			Console.Write(new string('\n', 5));
+			Console.WriteLine(t1 == t2);*/
+
+			//Test Animation
+			/*Console.Write(new string('\n', 5));
+			Led3dAnimation a = new Led3dAnimation(5, 5, 5);
+			a.AddFrame(1);
+			a.GetFrame(1).GetLed3dFrameLayer(2).SetPixel(3, 2, true);
+			JObject b = a.ToJson();
+			string t1 = b.ToString();
+			Console.WriteLine(t1);
+
+			Console.Write(new string('\n', 5));
+
+			Led3dAnimation c = new Led3dAnimation(b);
+			string t2 = c.ToJson().ToString();
+			Console.WriteLine(t2);
+
+
+			Console.Write(new string('\n', 5));
+			Console.WriteLine(t1 == t2);*/
 		}
 	}
 }
