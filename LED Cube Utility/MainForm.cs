@@ -11,16 +11,20 @@ using Led3dImage;
 
 namespace LED_Cube_Utility {
 	public partial class MainForm : Form {
+		Color buttonSetColor = Color.Black;
+		Color buttonNotSetColor = Color.White;
+
 		private string AnimationFilePath = null;
 		private Led3dAnimation Animation = null;
 		private int AnimationFrameIndex = -1;
 		private Led3dFrame AnimationFrame = null;
 		private int AnimationLayerIndex = -1;
 		private Led3dFrameLayer AnimationLayer = null;
-		private List<Button> PixelButtons;
+		private Dictionary<Tuple<int, int>, Button> PixelButtons;
 
 		public MainForm() {
 			InitializeComponent();
+			PixelButtons = new Dictionary<Tuple<int, int>, Button>();
 		}
 
 		public void ErrorPopUp(string message) {
@@ -29,12 +33,32 @@ namespace LED_Cube_Utility {
 			errorForm.Show();
 		}
 
-		// (!) Change to refreshAnimationLayer, move setup code to new function (called by File>New), store buttons in global list
-		public void ChangeAnimationLayer(int layerIndex) {
-			labelLayerInfo.Text = "Layer " + (layerIndex + 1) + "/" + Animation.Height;
-			AnimationLayer = AnimationFrame.GetLed3dFrameLayer(layerIndex);
-			// set up the tick boxes
+		public void CreateButtons() {
+			foreach (Button b in PixelButtons.Values) {
+				panelLayerGrid.Controls.Remove(b);
+			}
+			PixelButtons.Clear();
 
+			for (int verticalIndex = 0; verticalIndex < Animation.Length; verticalIndex++) {
+				for (int horizontalIndex = 0; horizontalIndex < Animation.Width; horizontalIndex++) {
+					Button b = new Button();
+					b.Name = "Pixel_" + horizontalIndex + "_" + verticalIndex;
+					b.Click += new EventHandler(PixelClickHandler);
+					b.Text = "";
+					PixelButtons[new Tuple<int, int>(horizontalIndex, verticalIndex)] = b;
+
+					panelLayerGrid.Controls.Add(b);
+				}
+			}
+		}
+
+		private void panelLayerGrid_Resize(object sender, EventArgs e) {
+			if (Animation != null) {
+				RepositionButtons();
+			}
+		}
+
+		public void RepositionButtons() {
 			int panelWidth = panelLayerGrid.Width;
 			int panelHeight = panelLayerGrid.Height;
 
@@ -46,42 +70,52 @@ namespace LED_Cube_Utility {
 			int startingX = borderWidthHorizontal;
 			int startingY = borderWidthVertical;
 
-			int unitsHorizontal = (int)AnimationLayer.Width;
-			int unitsVertical = (int)AnimationLayer.Length;
+			int unitsHorizontal = (int)Animation.Width;
+			int unitsVertical = (int)Animation.Length;
 
 			int unitWidth = (panelWidth - 2 * borderWidthHorizontal - (unitsHorizontal - 1) * paddingHorizontal) / unitsHorizontal;
 			int unitHeight = (panelHeight - 2 * borderWidthVertical - (unitsVertical - 1) * paddingVertical) / unitsVertical;
-
-			Color buttonSetColor = Color.Black;
-			Color buttonNotSetColor = Color.White;
 
 			int y = startingY;
 			for (int verticalIndex = 0; verticalIndex < unitsVertical; verticalIndex++) {
 				int x = startingX;
 				for (int horizontalIndex = 0; horizontalIndex < unitsHorizontal; horizontalIndex++) {
-					Button b = new Button();
-					b.Name = "Pixel_" + horizontalIndex + "_" + verticalIndex;
-					b.Click += new EventHandler(PixelClickHandler);
-					b.Text = "";
+					Button b = PixelButtons[new Tuple<int, int>(horizontalIndex, verticalIndex)];
 					b.Width = unitWidth;
 					b.Height = unitHeight;
 					b.Location = new Point(x, y);
-
-					Color buttonColor;
-					if (AnimationLayer.GetPixel(horizontalIndex, verticalIndex)) {
-						buttonColor = buttonSetColor;
-					} else {
-						buttonColor = buttonNotSetColor;
-					}
-					b.BackColor = buttonColor;
-
-					panelLayerGrid.Controls.Add(b);
 
 					x += unitWidth + paddingHorizontal;
 				}
 				y += unitHeight + paddingVertical;
 			}
+		}
 
+		public void RecolorButton(int colIndex, int rowIndex) {
+			Button b = PixelButtons[new Tuple<int, int>(colIndex, rowIndex)];
+
+			Color buttonColor;
+			if (AnimationLayer.GetPixel(colIndex, rowIndex)) {
+				buttonColor = buttonSetColor;
+			} else {
+				buttonColor = buttonNotSetColor;
+			}
+			b.BackColor = buttonColor;
+		}
+
+		public void RecolorButtons() {
+			for (int verticalIndex = 0; verticalIndex < Animation.Length; verticalIndex++) {
+				for (int horizontalIndex = 0; horizontalIndex < Animation.Width; horizontalIndex++) {
+					RecolorButton(horizontalIndex, verticalIndex);
+				}
+			}
+		}
+		
+		public void ChangeAnimationLayer(int layerIndex) {
+			labelLayerInfo.Text = "Layer " + (layerIndex + 1) + "/" + Animation.Height;
+			AnimationLayer = AnimationFrame.GetLed3dFrameLayer(layerIndex);
+
+			RecolorButtons();
 		}
 
 		public void ChangeAnimationFrame(int frameIndex) {
@@ -93,7 +127,13 @@ namespace LED_Cube_Utility {
 		}
 
 		public void PixelClickHandler(Object sender, EventArgs e) {
-			ErrorPopUp(((Button)sender).Name + " was clicked");
+			string name = ((Button)sender).Name;
+			string[] tokens = name.Split('_');
+			int col = int.Parse(tokens[1]);
+			int row = int.Parse(tokens[2]);
+			bool prevVal = AnimationLayer.GetPixel(col, row);
+			AnimationLayer.SetPixel(col, row, !prevVal);
+			RecolorButton(col, row);
 		}
 
 		private void mnuFileNew_Click(object sender, EventArgs e) {
@@ -105,6 +145,9 @@ namespace LED_Cube_Utility {
 				AnimationFrameIndex = 0;
 				AnimationFrame = Animation.GetFrame(AnimationFrameIndex);
 				AnimationLayerIndex = 0;
+
+				CreateButtons();
+				RepositionButtons();
 
 				ChangeAnimationFrame(AnimationFrameIndex);
 				ChangeAnimationLayer(AnimationLayerIndex);
@@ -204,15 +247,15 @@ namespace LED_Cube_Utility {
 			ErrorPopUp("Not implemented.");
 		}
 
-		private void buttonFrameTime_Click(object sender, EventArgs e) {
-
-		}
-
-		private void buttonFrameLeft_Click(object sender, EventArgs e) {
-
-		}
-
 		private void buttonFrameRight_Click(object sender, EventArgs e) {
+
+		}
+
+		private void buttonFrameLeft_Click (object sender, EventArgs e) {
+
+		}
+
+		private void buttonFrameTime_Click(object sender, EventArgs e) {
 
 		}
 	}

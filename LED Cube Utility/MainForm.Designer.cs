@@ -37,16 +37,16 @@
 			this.mnuToolsBaudRate = new System.Windows.Forms.ToolStripMenuItem();
 			this.mnuToolsProgramDevice = new System.Windows.Forms.ToolStripMenuItem();
 			this.panelLayerOptions = new System.Windows.Forms.Panel();
-			this.panelLayerGrid = new System.Windows.Forms.Panel();
-			this.buttonFrameTime = new System.Windows.Forms.Button();
-			this.buttonFrameLeft = new System.Windows.Forms.Button();
-			this.buttonFrameRight = new System.Windows.Forms.Button();
-			this.labelLayerInfo = new System.Windows.Forms.Label();
+			this.labelFrameInfo = new System.Windows.Forms.Label();
 			this.buttonClearLayer = new System.Windows.Forms.Button();
 			this.buttonFillLayer = new System.Windows.Forms.Button();
 			this.buttonLayerDown = new System.Windows.Forms.Button();
 			this.buttonLayerUp = new System.Windows.Forms.Button();
-			this.labelFrameInfo = new System.Windows.Forms.Label();
+			this.labelLayerInfo = new System.Windows.Forms.Label();
+			this.buttonFrameRight = new System.Windows.Forms.Button();
+			this.buttonFrameLeft = new System.Windows.Forms.Button();
+			this.buttonFrameTime = new System.Windows.Forms.Button();
+			this.panelLayerGrid = new System.Windows.Forms.Panel();
 			this.menuStrip1.SuspendLayout();
 			this.panelLayerOptions.SuspendLayout();
 			this.SuspendLayout();
@@ -115,14 +115,14 @@
 			// mnuEditNewFrame
 			// 
 			this.mnuEditNewFrame.Name = "mnuEditNewFrame";
-			this.mnuEditNewFrame.Size = new System.Drawing.Size(210, 30);
+			this.mnuEditNewFrame.Size = new System.Drawing.Size(200, 30);
 			this.mnuEditNewFrame.Text = "New Frame...";
 			this.mnuEditNewFrame.Click += new System.EventHandler(this.mnuEditNewFrame_Click);
 			// 
 			// mnuEditDeleteFrame
 			// 
 			this.mnuEditDeleteFrame.Name = "mnuEditDeleteFrame";
-			this.mnuEditDeleteFrame.Size = new System.Drawing.Size(210, 30);
+			this.mnuEditDeleteFrame.Size = new System.Drawing.Size(200, 30);
 			this.mnuEditDeleteFrame.Text = "Delete Frame";
 			this.mnuEditDeleteFrame.Click += new System.EventHandler(this.mnuEditDeleteFrame_Click);
 			// 
@@ -174,53 +174,15 @@
 			this.panelLayerOptions.Size = new System.Drawing.Size(112, 586);
 			this.panelLayerOptions.TabIndex = 1;
 			// 
-			// panelLayerGrid
+			// labelFrameInfo
 			// 
-			this.panelLayerGrid.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.panelLayerGrid.Location = new System.Drawing.Point(112, 33);
-			this.panelLayerGrid.Name = "panelLayerGrid";
-			this.panelLayerGrid.Size = new System.Drawing.Size(612, 586);
-			this.panelLayerGrid.TabIndex = 3;
-			// 
-			// buttonFrameTime
-			// 
-			this.buttonFrameTime.Dock = System.Windows.Forms.DockStyle.Bottom;
-			this.buttonFrameTime.Location = new System.Drawing.Point(0, 535);
-			this.buttonFrameTime.Name = "buttonFrameTime";
-			this.buttonFrameTime.Size = new System.Drawing.Size(112, 51);
-			this.buttonFrameTime.TabIndex = 8;
-			this.buttonFrameTime.Text = "Frame Time";
-			this.buttonFrameTime.UseVisualStyleBackColor = true;
-			// 
-			// buttonFrameLeft
-			// 
-			this.buttonFrameLeft.Dock = System.Windows.Forms.DockStyle.Bottom;
-			this.buttonFrameLeft.Location = new System.Drawing.Point(0, 484);
-			this.buttonFrameLeft.Name = "buttonFrameLeft";
-			this.buttonFrameLeft.Size = new System.Drawing.Size(112, 51);
-			this.buttonFrameLeft.TabIndex = 9;
-			this.buttonFrameLeft.Text = "Frame Left";
-			this.buttonFrameLeft.UseVisualStyleBackColor = true;
-			// 
-			// buttonFrameRight
-			// 
-			this.buttonFrameRight.Dock = System.Windows.Forms.DockStyle.Bottom;
-			this.buttonFrameRight.Location = new System.Drawing.Point(0, 433);
-			this.buttonFrameRight.Name = "buttonFrameRight";
-			this.buttonFrameRight.Size = new System.Drawing.Size(112, 51);
-			this.buttonFrameRight.TabIndex = 10;
-			this.buttonFrameRight.Text = "Frame Right";
-			this.buttonFrameRight.UseVisualStyleBackColor = true;
-			// 
-			// labelLayerInfo
-			// 
-			this.labelLayerInfo.AutoSize = true;
-			this.labelLayerInfo.Dock = System.Windows.Forms.DockStyle.Top;
-			this.labelLayerInfo.Location = new System.Drawing.Point(0, 0);
-			this.labelLayerInfo.Name = "labelLayerInfo";
-			this.labelLayerInfo.Size = new System.Drawing.Size(48, 20);
-			this.labelLayerInfo.TabIndex = 11;
-			this.labelLayerInfo.Text = "Layer";
+			this.labelFrameInfo.AutoSize = true;
+			this.labelFrameInfo.Dock = System.Windows.Forms.DockStyle.Bottom;
+			this.labelFrameInfo.Location = new System.Drawing.Point(0, 413);
+			this.labelFrameInfo.Name = "labelFrameInfo";
+			this.labelFrameInfo.Size = new System.Drawing.Size(55, 20);
+			this.labelFrameInfo.TabIndex = 16;
+			this.labelFrameInfo.Text = "Frame";
 			// 
 			// buttonClearLayer
 			// 
@@ -251,6 +213,7 @@
 			this.buttonLayerDown.TabIndex = 13;
 			this.buttonLayerDown.Text = "Layer Down";
 			this.buttonLayerDown.UseVisualStyleBackColor = true;
+			this.buttonLayerDown.Click += new System.EventHandler(this.buttonLayerDown_Click);
 			// 
 			// buttonLayerUp
 			// 
@@ -263,15 +226,55 @@
 			this.buttonLayerUp.UseVisualStyleBackColor = true;
 			this.buttonLayerUp.Click += new System.EventHandler(this.buttonLayerUp_Click);
 			// 
-			// labelFrameInfo
+			// labelLayerInfo
 			// 
-			this.labelFrameInfo.AutoSize = true;
-			this.labelFrameInfo.Dock = System.Windows.Forms.DockStyle.Bottom;
-			this.labelFrameInfo.Location = new System.Drawing.Point(0, 413);
-			this.labelFrameInfo.Name = "labelFrameInfo";
-			this.labelFrameInfo.Size = new System.Drawing.Size(55, 20);
-			this.labelFrameInfo.TabIndex = 16;
-			this.labelFrameInfo.Text = "Frame";
+			this.labelLayerInfo.AutoSize = true;
+			this.labelLayerInfo.Dock = System.Windows.Forms.DockStyle.Top;
+			this.labelLayerInfo.Location = new System.Drawing.Point(0, 0);
+			this.labelLayerInfo.Name = "labelLayerInfo";
+			this.labelLayerInfo.Size = new System.Drawing.Size(48, 20);
+			this.labelLayerInfo.TabIndex = 11;
+			this.labelLayerInfo.Text = "Layer";
+			// 
+			// buttonFrameRight
+			// 
+			this.buttonFrameRight.Dock = System.Windows.Forms.DockStyle.Bottom;
+			this.buttonFrameRight.Location = new System.Drawing.Point(0, 433);
+			this.buttonFrameRight.Name = "buttonFrameRight";
+			this.buttonFrameRight.Size = new System.Drawing.Size(112, 51);
+			this.buttonFrameRight.TabIndex = 10;
+			this.buttonFrameRight.Text = "Frame Right";
+			this.buttonFrameRight.UseVisualStyleBackColor = true;
+			this.buttonFrameRight.Click += new System.EventHandler(this.buttonFrameRight_Click);
+			// 
+			// buttonFrameLeft
+			// 
+			this.buttonFrameLeft.Dock = System.Windows.Forms.DockStyle.Bottom;
+			this.buttonFrameLeft.Location = new System.Drawing.Point(0, 484);
+			this.buttonFrameLeft.Name = "buttonFrameLeft";
+			this.buttonFrameLeft.Size = new System.Drawing.Size(112, 51);
+			this.buttonFrameLeft.TabIndex = 9;
+			this.buttonFrameLeft.Text = "Frame Left";
+			this.buttonFrameLeft.UseVisualStyleBackColor = true;
+			// 
+			// buttonFrameTime
+			// 
+			this.buttonFrameTime.Dock = System.Windows.Forms.DockStyle.Bottom;
+			this.buttonFrameTime.Location = new System.Drawing.Point(0, 535);
+			this.buttonFrameTime.Name = "buttonFrameTime";
+			this.buttonFrameTime.Size = new System.Drawing.Size(112, 51);
+			this.buttonFrameTime.TabIndex = 8;
+			this.buttonFrameTime.Text = "Frame Time";
+			this.buttonFrameTime.UseVisualStyleBackColor = true;
+			// 
+			// panelLayerGrid
+			// 
+			this.panelLayerGrid.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.panelLayerGrid.Location = new System.Drawing.Point(112, 33);
+			this.panelLayerGrid.Name = "panelLayerGrid";
+			this.panelLayerGrid.Size = new System.Drawing.Size(612, 586);
+			this.panelLayerGrid.TabIndex = 3;
+			this.panelLayerGrid.Resize += new System.EventHandler(this.panelLayerGrid_Resize);
 			// 
 			// MainForm
 			// 
