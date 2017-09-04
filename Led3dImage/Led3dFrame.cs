@@ -63,7 +63,8 @@ namespace Led3dImage
 
 			Led3dFrameLayers = new List<Led3dFrameLayer>((int)Height);
 			for (int heightIndex = 0; heightIndex < Height; heightIndex++) {
-				JObject layerObject = (JObject)jsonFrame.SelectToken("Layer" + heightIndex);
+				JObject layerObject = new JObject();
+				layerObject.Add(new JProperty("Image", jsonFrame.SelectToken("Layer" + heightIndex)));
 				layerObject.Add(new JProperty("Width", Width));
 				layerObject.Add(new JProperty("Length", Length));
 				Led3dFrameLayers.Add(new Led3dFrameLayer(layerObject));
@@ -95,9 +96,7 @@ namespace Led3dImage
 
 			for (int heightIndex = 0; heightIndex < Height; heightIndex++) {
 				JObject layerObject = Led3dFrameLayers[heightIndex].ToJson();
-				layerObject.Remove("Width");
-				layerObject.Remove("Length");
-				frame.Add(new JProperty("Layer" + heightIndex, layerObject));
+				frame.Add(new JProperty("Layer" + heightIndex, layerObject.SelectToken("Image")));
 			}
 
 			return frame;
