@@ -185,5 +185,13 @@ namespace Led3dImage
 				AnimationUnits.Add(au);
 			}
 		}
+
+		/// <summary>
+		/// Returns a packaged version of the animation, suitable for transfer to a 3D LED display.
+		/// </summary>
+		/// <returns>A bytes object representing the animation.</returns>
+		public byte[] ToBytes() {
+			throw (new NotImplementedException("No standard established for animation bytes representation."));
+		}
 	}
 }

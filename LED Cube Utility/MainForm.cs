@@ -8,11 +8,15 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Led3dImage;
+using System.IO;
+using Newtonsoft.Json.Linq;
+using System.IO.Ports;
 
 namespace LED_Cube_Utility {
 	public partial class MainForm : Form {
-		Color buttonSetColor = Color.Black;
-		Color buttonNotSetColor = Color.White;
+		Color BUTTON_SET_COLOR = Color.Black;
+		Color BUTTON_NOT_SET_COLOR = Color.White;
+		public static int DEFAULT_BAUD_RATE = 9600;
 
 		private string AnimationFilePath = null;
 		private Led3dAnimation Animation = null;
@@ -22,15 +26,13 @@ namespace LED_Cube_Utility {
 		private Led3dFrameLayer AnimationLayer = null;
 		private Dictionary<Tuple<int, int>, Button> PixelButtons;
 
+		SerialPort sp = null;
+		int CurrentBaudRate = DEFAULT_BAUD_RATE;
+		
+
 		public MainForm() {
 			InitializeComponent();
 			PixelButtons = new Dictionary<Tuple<int, int>, Button>();
-		}
-
-		public void ErrorPopUp(string message) {
-			var errorForm = new ErrorForm();
-			errorForm.SetMessage(message);
-			errorForm.Show();
 		}
 
 		public void CreateButtons() {
@@ -96,9 +98,9 @@ namespace LED_Cube_Utility {
 
 			Color buttonColor;
 			if (AnimationLayer.GetPixel(colIndex, rowIndex)) {
-				buttonColor = buttonSetColor;
+				buttonColor = BUTTON_SET_COLOR;
 			} else {
-				buttonColor = buttonNotSetColor;
+				buttonColor = BUTTON_NOT_SET_COLOR;
 			}
 			b.BackColor = buttonColor;
 		}
@@ -137,7 +139,7 @@ namespace LED_Cube_Utility {
 		}
 
 		private void mnuFileNew_Click(object sender, EventArgs e) {
-			var dimensionForm = new NewAnimationForm();
+			NewAnimationForm dimensionForm = new NewAnimationForm();
 			dimensionForm.ShowDialog();
 
 			if (dimensionForm.DialogResult == DialogResult.OK) {
@@ -145,6 +147,8 @@ namespace LED_Cube_Utility {
 				AnimationFrameIndex = 0;
 				AnimationFrame = Animation.GetFrame(AnimationFrameIndex);
 				AnimationLayerIndex = 0;
+
+				AnimationFilePath = null;
 
 				CreateButtons();
 				RepositionButtons();
@@ -155,34 +159,101 @@ namespace LED_Cube_Utility {
 		}
 
 		private void mnuFileOpen_Click(object sender, EventArgs e) {
-			ErrorPopUp("Not implemented.");
+			OpenFileDialog ofd = new OpenFileDialog();
+			ofd.Filter = "JSON files (*.json)|*.json|All files (*.*)|*.*";
+			ofd.FilterIndex = 1;
+			ofd.RestoreDirectory = true;
+
+			if (ofd.ShowDialog() == DialogResult.OK) {
+				AnimationFilePath = ofd.FileName;
+				OpenAnimation();
+			}
+		}
+
+		private void OpenAnimation() {
+			using (FileStream inStream = new FileStream(AnimationFilePath, FileMode.Open)) {
+				using (StreamReader inStreamReader = new StreamReader(inStream)) {
+					string fileContents = inStreamReader.ReadToEnd();
+					JObject animationObject = null;
+					try {
+						animationObject = JObject.Parse(fileContents);
+					} catch (Exception e) {
+						MessageBox.Show("The given file contains malformed JSON.");
+					}
+
+					if (animationObject != null) {
+						try {
+							Animation = new Led3dAnimation(animationObject);
+							AnimationFrameIndex = 0;
+							AnimationLayerIndex = 0;
+
+							CreateButtons();
+							RepositionButtons();
+
+							ChangeAnimationFrame(AnimationFrameIndex);
+							ChangeAnimationLayer(AnimationLayerIndex);
+						} catch (Exception e) {
+							MessageBox.Show("The contained JSON does not represent an animation.");
+						}
+					}
+				}
+			}
 		}
 
 		private void mnuFileSave_Click(object sender, EventArgs e) {
 			if (Animation == null) {
-				ErrorPopUp("No animation active.");
+				MessageBox.Show("No animation active.");
 				return;
 			}
 
-			ErrorPopUp("Not implemented.");
+			if (AnimationFilePath == null) { // A chance to set a save location
+				SelectSaveLocation();
+			}
+
+			if (AnimationFilePath != null) {
+				SaveAnimation();
+			}
 		}
 
 		private void mnuFileSaveAs_Click(object sender, EventArgs e) {
 			if (Animation == null) {
-				ErrorPopUp("No animation active.");
+				MessageBox.Show("No animation active.");
 				return;
 			}
 
-			ErrorPopUp("Not implemented.");
+			SelectSaveLocation();
+
+			if (AnimationFilePath != null) {
+				SaveAnimation();
+			}
+		}
+
+		private void SelectSaveLocation() {
+			SaveFileDialog sfd = new SaveFileDialog();
+			sfd.Filter = "JSON files (*.json)|*.json|All files (*.*)|*.*";
+			sfd.FilterIndex = 1;
+			sfd.RestoreDirectory = true;
+
+			if (sfd.ShowDialog() == DialogResult.OK) {
+				AnimationFilePath = sfd.FileName;
+			}
+		}
+
+		private void SaveAnimation() {
+			using (Stream outStream = new FileStream(AnimationFilePath, FileMode.Create)) {
+				using (StreamWriter sw = new StreamWriter(outStream)) {
+					sw.Write(Animation.ToJson().ToString());
+				}
+			}
 		}
 
 		private void mnuEditNewFrame_Click(object sender, EventArgs e) {
 			if (Animation == null) {
-				ErrorPopUp("Please create a new animation first.");
+				MessageBox.Show("Please create a new animation first.");
 				return;
 			}
 
-			var frameInsertForm = new FrameInsertForm(Animation.GetFrameCount());
+			FrameInsertForm frameInsertForm = new FrameInsertForm(Animation.GetFrameCount());
 			frameInsertForm.ShowDialog();
 
 			if (frameInsertForm.DialogResult == DialogResult.OK) {
@@ -197,25 +268,27 @@ namespace LED_Cube_Utility {
 
 		private void mnuEditDeleteFrame_Click(object sender, EventArgs e) {
 			if (Animation == null) {
-				ErrorPopUp("Please create a new animation first.");
+				MessageBox.Show("Please create a new animation first.");
 				return;
 			}
 
 			int frameCount = Animation.GetFrameCount();
 
 			if (frameCount <= 1) {
-				ErrorPopUp("An animation must be at least one frame long.");
+				MessageBox.Show("An animation must be at least one frame long.");
 				return;
 			}
 
-			var frameDeleteForm = new FrameDeleteForm(Animation.GetFrameCount() - 1);
+			FrameDeleteForm frameDeleteForm = new FrameDeleteForm(Animation.GetFrameCount() - 1);
 			frameDeleteForm.ShowDialog();
 
 			if (frameDeleteForm.DialogResult == DialogResult.OK) {
 				Animation.DelFrame(frameDeleteForm.Index);
 
 				if (AnimationFrameIndex >= frameDeleteForm.Index) { // Removed focus frame or focus frame shifted in delete
-					AnimationFrameIndex--;
+					if (AnimationFrameIndex > 0) {
+						AnimationFrameIndex--;
+					}
 				}
 
 				ChangeAnimationFrame(AnimationFrameIndex);
@@ -225,7 +298,7 @@ namespace LED_Cube_Utility {
 
 		private void buttonLayerUp_Click(object sender, EventArgs e) {
 			if (Animation == null) {
-				ErrorPopUp("No animation active.");
+				MessageBox.Show("No animation active.");
 				return;
 			}
 
@@ -238,7 +311,7 @@ namespace LED_Cube_Utility {
 
 		private void buttonLayerDown_Click(object sender, EventArgs e) {
 			if (Animation == null) {
-				ErrorPopUp("No animation active.");
+				MessageBox.Show("No animation active.");
 				return;
 			}
 
@@ -251,7 +324,7 @@ namespace LED_Cube_Utility {
 
 		private void buttonFillLayer_Click(object sender, EventArgs e) {
 			if (Animation == null) {
-				ErrorPopUp("No animation active.");
+				MessageBox.Show("No animation active.");
 				return;
 			}
 
@@ -265,7 +338,7 @@ namespace LED_Cube_Utility {
 
 		private void buttonClearLayer_Click(object sender, EventArgs e) {
 			if (Animation == null) {
-				ErrorPopUp("No animation active.");
+				MessageBox.Show("No animation active.");
 				return;
 			}
 
@@ -279,7 +352,7 @@ namespace LED_Cube_Utility {
 
 		private void buttonFrameRight_Click(object sender, EventArgs e) {
 			if (Animation == null) {
-				ErrorPopUp("No animation active.");
+				MessageBox.Show("No animation active.");
 				return;
 			}
 
@@ -292,7 +365,7 @@ namespace LED_Cube_Utility {
 
 		private void buttonFrameLeft_Click (object sender, EventArgs e) {
 			if (Animation == null) {
-				ErrorPopUp("No animation active.");
+				MessageBox.Show("No animation active.");
 				return;
 			}
 
@@ -305,12 +378,12 @@ namespace LED_Cube_Utility {
 
 		private void buttonFrameTime_Click(object sender, EventArgs e) {
 			if (Animation == null) {
-				ErrorPopUp("Please create a new animation first.");
+				MessageBox.Show("Please create a new animation first.");
 				return;
 			}
 
 			int currentFrameDuration = (int)Animation.GetFrameDuration(AnimationFrameIndex);
-			var frameTimeForm = new FrameTimeForm(currentFrameDuration);
+			FrameTimeForm frameTimeForm = new FrameTimeForm(currentFrameDuration);
 			frameTimeForm.ShowDialog();
 
 			if (frameTimeForm.DialogResult == DialogResult.OK) {
@@ -320,15 +393,48 @@ namespace LED_Cube_Utility {
 
 
 		private void mnuToolsComPort_Click(object sender, EventArgs e) {
-			ErrorPopUp("Not implemented.");
+			ComPortSelectionForm cpsf = new ComPortSelectionForm();
+			cpsf.ShowDialog();
+
+			if (cpsf.DialogResult == DialogResult.OK) {
+				string portName = cpsf.portName;
+				sp = new SerialPort(portName);
+				sp.DataBits = 8;
+				sp.StopBits = StopBits.One;
+				sp.Parity = Parity.None;
+				sp.BaudRate = CurrentBaudRate;
+			}
 		}
 
 		private void mnuToolsBaudRate_Click(object sender, EventArgs e) {
-			ErrorPopUp("Not implemented.");
+			if (sp == null) {
+				MessageBox.Show("Please select a COM port.");
+				return;
+			}
+
+			BaudRateSelectionForm brsf = new BaudRateSelectionForm(CurrentBaudRate);
+			brsf.ShowDialog();
+
+			if (brsf.DialogResult == DialogResult.OK) {
+				CurrentBaudRate = brsf.baudRate;
+				sp.BaudRate = CurrentBaudRate;
+			}
 		}
 
 		private void mnuToolsProgramDevice_Click(object sender, EventArgs e) {
-			ErrorPopUp("Not implemented.");
+			if (Animation == null) {
+				MessageBox.Show("Please create a new animation first.");
+				return;
+			}
+
+			if (sp == null) {
+				MessageBox.Show("Please select a COM port.");
+				return;
+			}
+
+			byte[] animationAsBytes = Animation.ToBytes();
+			sp.Write(animationAsBytes, 0, animationAsBytes.Length);
+			MessageBox.Show("Animation sent.");
 		}
 	}
 }

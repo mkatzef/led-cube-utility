@@ -50,11 +50,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ErrorForm.cs">
+    <Compile Include="BaudRateSelectionForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ErrorForm.Designer.cs">
-      <DependentUpon>ErrorForm.cs</DependentUpon>
+    <Compile Include="BaudRateSelectionForm.Designer.cs">
+      <DependentUpon>BaudRateSelectionForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ComPortSelectionForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ComPortSelectionForm.Designer.cs">
+      <DependentUpon>ComPortSelectionForm.cs</DependentUpon>
     </Compile>
     <Compile Include="FrameDeleteForm.cs">
       <SubType>Form</SubType>
@@ -88,8 +94,11 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="ErrorForm.resx">
-      <DependentUpon>ErrorForm.cs</DependentUpon>
+    <EmbeddedResource Include="BaudRateSelectionForm.resx">
+      <DependentUpon>BaudRateSelectionForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ComPortSelectionForm.resx">
+      <DependentUpon>ComPortSelectionForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FrameDeleteForm.resx">
       <DependentUpon>FrameDeleteForm.cs</DependentUpon>

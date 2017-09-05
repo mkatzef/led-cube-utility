@@ -60,8 +60,7 @@
             this.toolsToolStripMenuItem});
 			this.menuStrip1.Location = new System.Drawing.Point(0, 0);
 			this.menuStrip1.Name = "menuStrip1";
-			this.menuStrip1.Padding = new System.Windows.Forms.Padding(5, 2, 0, 2);
-			this.menuStrip1.Size = new System.Drawing.Size(644, 28);
+			this.menuStrip1.Size = new System.Drawing.Size(724, 33);
 			this.menuStrip1.TabIndex = 0;
 			this.menuStrip1.Text = "menuStrip1";
 			// 
@@ -73,34 +72,34 @@
             this.mnuFileSave,
             this.mnuFileSaveAs});
 			this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
-			this.fileToolStripMenuItem.Size = new System.Drawing.Size(44, 24);
+			this.fileToolStripMenuItem.Size = new System.Drawing.Size(50, 29);
 			this.fileToolStripMenuItem.Text = "File";
 			// 
 			// mnuFileNew
 			// 
 			this.mnuFileNew.Name = "mnuFileNew";
-			this.mnuFileNew.Size = new System.Drawing.Size(144, 26);
+			this.mnuFileNew.Size = new System.Drawing.Size(170, 30);
 			this.mnuFileNew.Text = "New";
 			this.mnuFileNew.Click += new System.EventHandler(this.mnuFileNew_Click);
 			// 
 			// mnuFileOpen
 			// 
 			this.mnuFileOpen.Name = "mnuFileOpen";
-			this.mnuFileOpen.Size = new System.Drawing.Size(144, 26);
+			this.mnuFileOpen.Size = new System.Drawing.Size(170, 30);
 			this.mnuFileOpen.Text = "Open...";
 			this.mnuFileOpen.Click += new System.EventHandler(this.mnuFileOpen_Click);
 			// 
 			// mnuFileSave
 			// 
 			this.mnuFileSave.Name = "mnuFileSave";
-			this.mnuFileSave.Size = new System.Drawing.Size(144, 26);
+			this.mnuFileSave.Size = new System.Drawing.Size(170, 30);
 			this.mnuFileSave.Text = "Save";
 			this.mnuFileSave.Click += new System.EventHandler(this.mnuFileSave_Click);
 			// 
 			// mnuFileSaveAs
 			// 
 			this.mnuFileSaveAs.Name = "mnuFileSaveAs";
-			this.mnuFileSaveAs.Size = new System.Drawing.Size(144, 26);
+			this.mnuFileSaveAs.Size = new System.Drawing.Size(170, 30);
 			this.mnuFileSaveAs.Text = "Save As...";
 			this.mnuFileSaveAs.Click += new System.EventHandler(this.mnuFileSaveAs_Click);
 			// 
@@ -110,20 +109,20 @@
             this.mnuEditNewFrame,
             this.mnuEditDeleteFrame});
 			this.editToolStripMenuItem.Name = "editToolStripMenuItem";
-			this.editToolStripMenuItem.Size = new System.Drawing.Size(47, 24);
+			this.editToolStripMenuItem.Size = new System.Drawing.Size(54, 29);
 			this.editToolStripMenuItem.Text = "Edit";
 			// 
 			// mnuEditNewFrame
 			// 
 			this.mnuEditNewFrame.Name = "mnuEditNewFrame";
-			this.mnuEditNewFrame.Size = new System.Drawing.Size(181, 26);
+			this.mnuEditNewFrame.Size = new System.Drawing.Size(200, 30);
 			this.mnuEditNewFrame.Text = "New Frame...";
 			this.mnuEditNewFrame.Click += new System.EventHandler(this.mnuEditNewFrame_Click);
 			// 
 			// mnuEditDeleteFrame
 			// 
 			this.mnuEditDeleteFrame.Name = "mnuEditDeleteFrame";
-			this.mnuEditDeleteFrame.Size = new System.Drawing.Size(181, 26);
+			this.mnuEditDeleteFrame.Size = new System.Drawing.Size(200, 30);
 			this.mnuEditDeleteFrame.Text = "Delete Frame";
 			this.mnuEditDeleteFrame.Click += new System.EventHandler(this.mnuEditDeleteFrame_Click);
 			// 
@@ -134,27 +133,27 @@
             this.mnuToolsBaudRate,
             this.mnuToolsProgramDevice});
 			this.toolsToolStripMenuItem.Name = "toolsToolStripMenuItem";
-			this.toolsToolStripMenuItem.Size = new System.Drawing.Size(56, 24);
+			this.toolsToolStripMenuItem.Size = new System.Drawing.Size(65, 29);
 			this.toolsToolStripMenuItem.Text = "Tools";
 			// 
 			// mnuToolsComPort
 			// 
 			this.mnuToolsComPort.Name = "mnuToolsComPort";
-			this.mnuToolsComPort.Size = new System.Drawing.Size(190, 26);
+			this.mnuToolsComPort.Size = new System.Drawing.Size(222, 30);
 			this.mnuToolsComPort.Text = "COM Port...";
 			this.mnuToolsComPort.Click += new System.EventHandler(this.mnuToolsComPort_Click);
 			// 
 			// mnuToolsBaudRate
 			// 
 			this.mnuToolsBaudRate.Name = "mnuToolsBaudRate";
-			this.mnuToolsBaudRate.Size = new System.Drawing.Size(190, 26);
+			this.mnuToolsBaudRate.Size = new System.Drawing.Size(222, 30);
 			this.mnuToolsBaudRate.Text = "Baud Rate...";
 			this.mnuToolsBaudRate.Click += new System.EventHandler(this.mnuToolsBaudRate_Click);
 			// 
 			// mnuToolsProgramDevice
 			// 
 			this.mnuToolsProgramDevice.Name = "mnuToolsProgramDevice";
-			this.mnuToolsProgramDevice.Size = new System.Drawing.Size(190, 26);
+			this.mnuToolsProgramDevice.Size = new System.Drawing.Size(222, 30);
 			this.mnuToolsProgramDevice.Text = "Program Device";
 			this.mnuToolsProgramDevice.Click += new System.EventHandler(this.mnuToolsProgramDevice_Click);
 			// 
@@ -170,29 +169,29 @@
 			this.panelLayerOptions.Controls.Add(this.buttonFrameLeft);
 			this.panelLayerOptions.Controls.Add(this.buttonFrameTime);
 			this.panelLayerOptions.Dock = System.Windows.Forms.DockStyle.Left;
-			this.panelLayerOptions.Location = new System.Drawing.Point(0, 28);
+			this.panelLayerOptions.Location = new System.Drawing.Point(0, 33);
 			this.panelLayerOptions.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
 			this.panelLayerOptions.Name = "panelLayerOptions";
-			this.panelLayerOptions.Size = new System.Drawing.Size(100, 467);
+			this.panelLayerOptions.Size = new System.Drawing.Size(112, 586);
 			this.panelLayerOptions.TabIndex = 1;
 			// 
 			// labelFrameInfo
 			// 
 			this.labelFrameInfo.AutoSize = true;
 			this.labelFrameInfo.Dock = System.Windows.Forms.DockStyle.Bottom;
-			this.labelFrameInfo.Location = new System.Drawing.Point(0, 327);
+			this.labelFrameInfo.Location = new System.Drawing.Point(0, 413);
 			this.labelFrameInfo.Name = "labelFrameInfo";
-			this.labelFrameInfo.Size = new System.Drawing.Size(48, 17);
+			this.labelFrameInfo.Size = new System.Drawing.Size(55, 20);
 			this.labelFrameInfo.TabIndex = 16;
 			this.labelFrameInfo.Text = "Frame";
 			// 
 			// buttonClearLayer
 			// 
 			this.buttonClearLayer.Dock = System.Windows.Forms.DockStyle.Top;
-			this.buttonClearLayer.Location = new System.Drawing.Point(0, 140);
+			this.buttonClearLayer.Location = new System.Drawing.Point(0, 173);
 			this.buttonClearLayer.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
 			this.buttonClearLayer.Name = "buttonClearLayer";
-			this.buttonClearLayer.Size = new System.Drawing.Size(100, 41);
+			this.buttonClearLayer.Size = new System.Drawing.Size(112, 51);
 			this.buttonClearLayer.TabIndex = 15;
 			this.buttonClearLayer.Text = "Clear Layer";
 			this.buttonClearLayer.UseVisualStyleBackColor = true;
@@ -201,10 +200,10 @@
 			// buttonFillLayer
 			// 
 			this.buttonFillLayer.Dock = System.Windows.Forms.DockStyle.Top;
-			this.buttonFillLayer.Location = new System.Drawing.Point(0, 99);
+			this.buttonFillLayer.Location = new System.Drawing.Point(0, 122);
 			this.buttonFillLayer.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
 			this.buttonFillLayer.Name = "buttonFillLayer";
-			this.buttonFillLayer.Size = new System.Drawing.Size(100, 41);
+			this.buttonFillLayer.Size = new System.Drawing.Size(112, 51);
 			this.buttonFillLayer.TabIndex = 14;
 			this.buttonFillLayer.Text = "Fill Layer";
 			this.buttonFillLayer.UseVisualStyleBackColor = true;
@@ -213,10 +212,10 @@
 			// buttonLayerDown
 			// 
 			this.buttonLayerDown.Dock = System.Windows.Forms.DockStyle.Top;
-			this.buttonLayerDown.Location = new System.Drawing.Point(0, 58);
+			this.buttonLayerDown.Location = new System.Drawing.Point(0, 71);
 			this.buttonLayerDown.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
 			this.buttonLayerDown.Name = "buttonLayerDown";
-			this.buttonLayerDown.Size = new System.Drawing.Size(100, 41);
+			this.buttonLayerDown.Size = new System.Drawing.Size(112, 51);
 			this.buttonLayerDown.TabIndex = 13;
 			this.buttonLayerDown.Text = "Layer Down";
 			this.buttonLayerDown.UseVisualStyleBackColor = true;
@@ -225,10 +224,10 @@
 			// buttonLayerUp
 			// 
 			this.buttonLayerUp.Dock = System.Windows.Forms.DockStyle.Top;
-			this.buttonLayerUp.Location = new System.Drawing.Point(0, 17);
+			this.buttonLayerUp.Location = new System.Drawing.Point(0, 20);
 			this.buttonLayerUp.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
 			this.buttonLayerUp.Name = "buttonLayerUp";
-			this.buttonLayerUp.Size = new System.Drawing.Size(100, 41);
+			this.buttonLayerUp.Size = new System.Drawing.Size(112, 51);
 			this.buttonLayerUp.TabIndex = 12;
 			this.buttonLayerUp.Text = "Layer Up";
 			this.buttonLayerUp.UseVisualStyleBackColor = true;
@@ -240,17 +239,17 @@
 			this.labelLayerInfo.Dock = System.Windows.Forms.DockStyle.Top;
 			this.labelLayerInfo.Location = new System.Drawing.Point(0, 0);
 			this.labelLayerInfo.Name = "labelLayerInfo";
-			this.labelLayerInfo.Size = new System.Drawing.Size(44, 17);
+			this.labelLayerInfo.Size = new System.Drawing.Size(48, 20);
 			this.labelLayerInfo.TabIndex = 11;
 			this.labelLayerInfo.Text = "Layer";
 			// 
 			// buttonFrameRight
 			// 
 			this.buttonFrameRight.Dock = System.Windows.Forms.DockStyle.Bottom;
-			this.buttonFrameRight.Location = new System.Drawing.Point(0, 344);
+			this.buttonFrameRight.Location = new System.Drawing.Point(0, 433);
 			this.buttonFrameRight.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
 			this.buttonFrameRight.Name = "buttonFrameRight";
-			this.buttonFrameRight.Size = new System.Drawing.Size(100, 41);
+			this.buttonFrameRight.Size = new System.Drawing.Size(112, 51);
 			this.buttonFrameRight.TabIndex = 10;
 			this.buttonFrameRight.Text = "Frame Right";
 			this.buttonFrameRight.UseVisualStyleBackColor = true;
@@ -259,10 +258,10 @@
 			// buttonFrameLeft
 			// 
 			this.buttonFrameLeft.Dock = System.Windows.Forms.DockStyle.Bottom;
-			this.buttonFrameLeft.Location = new System.Drawing.Point(0, 385);
+			this.buttonFrameLeft.Location = new System.Drawing.Point(0, 484);
 			this.buttonFrameLeft.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
 			this.buttonFrameLeft.Name = "buttonFrameLeft";
-			this.buttonFrameLeft.Size = new System.Drawing.Size(100, 41);
+			this.buttonFrameLeft.Size = new System.Drawing.Size(112, 51);
 			this.buttonFrameLeft.TabIndex = 9;
 			this.buttonFrameLeft.Text = "Frame Left";
 			this.buttonFrameLeft.UseVisualStyleBackColor = true;
@@ -271,10 +270,10 @@
 			// buttonFrameTime
 			// 
 			this.buttonFrameTime.Dock = System.Windows.Forms.DockStyle.Bottom;
-			this.buttonFrameTime.Location = new System.Drawing.Point(0, 426);
+			this.buttonFrameTime.Location = new System.Drawing.Point(0, 535);
 			this.buttonFrameTime.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
 			this.buttonFrameTime.Name = "buttonFrameTime";
-			this.buttonFrameTime.Size = new System.Drawing.Size(100, 41);
+			this.buttonFrameTime.Size = new System.Drawing.Size(112, 51);
 			this.buttonFrameTime.TabIndex = 8;
 			this.buttonFrameTime.Text = "Frame Time";
 			this.buttonFrameTime.UseVisualStyleBackColor = true;
@@ -283,18 +282,18 @@
 			// panelLayerGrid
 			// 
 			this.panelLayerGrid.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.panelLayerGrid.Location = new System.Drawing.Point(100, 28);
+			this.panelLayerGrid.Location = new System.Drawing.Point(112, 33);
 			this.panelLayerGrid.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
 			this.panelLayerGrid.Name = "panelLayerGrid";
-			this.panelLayerGrid.Size = new System.Drawing.Size(544, 467);
+			this.panelLayerGrid.Size = new System.Drawing.Size(612, 586);
 			this.panelLayerGrid.TabIndex = 3;
 			this.panelLayerGrid.Resize += new System.EventHandler(this.panelLayerGrid_Resize);
 			// 
 			// MainForm
 			// 
-			this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+			this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(644, 495);
+			this.ClientSize = new System.Drawing.Size(724, 619);
 			this.Controls.Add(this.panelLayerGrid);
 			this.Controls.Add(this.panelLayerOptions);
 			this.Controls.Add(this.menuStrip1);
