@@ -13,3 +13,6 @@ C:\Users\Marc\Dropbox\Course Documents\ENEL300\Projects\Project 2\PC_Utility\LED
 C:\Users\Marc\Dropbox\Course Documents\ENEL300\Projects\Project 2\PC_Utility\LED Cube Utility\LED Cube Utility\obj\Debug\LED_Cube_Utility.ErrorForm.resources
 C:\Users\Marc\Dropbox\Course Documents\ENEL300\Projects\Project 2\PC_Utility\LED Cube Utility\LED Cube Utility\obj\Debug\LED_Cube_Utility.MainForm.resources
 C:\Users\Marc\Dropbox\Course Documents\ENEL300\Projects\Project 2\PC_Utility\LED Cube Utility\LED Cube Utility\obj\Debug\LED_Cube_Utility.NewAnimationForm.resources
+C:\Users\Marc\Dropbox\Course Documents\ENEL300\Projects\Project 2\PC_Utility\LED Cube Utility\LED Cube Utility\obj\Debug\LED_Cube_Utility.FrameInsertForm.resources
+C:\Users\Marc\Dropbox\Course Documents\ENEL300\Projects\Project 2\PC_Utility\LED Cube Utility\LED Cube Utility\obj\Debug\LED_Cube_Utility.FrameDeleteForm.resources
+C:\Users\Marc\Dropbox\Course Documents\ENEL300\Projects\Project 2\PC_Utility\LED Cube Utility\LED Cube Utility\obj\Debug\LED_Cube_Utility.FrameTimeForm.resources

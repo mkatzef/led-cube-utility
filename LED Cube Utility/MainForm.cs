@@ -182,26 +182,46 @@ namespace LED_Cube_Utility {
 				return;
 			}
 
-			ErrorPopUp("Not implemented.");
+			var frameInsertForm = new FrameInsertForm(Animation.GetFrameCount());
+			frameInsertForm.ShowDialog();
+
+			if (frameInsertForm.DialogResult == DialogResult.OK) {
+				Animation.AddFrame(frameInsertForm.Index);
+				AnimationFrameIndex = frameInsertForm.Index;
+				AnimationLayerIndex = 0;
+
+				ChangeAnimationFrame(AnimationFrameIndex);
+				ChangeAnimationLayer(AnimationLayerIndex);
+			}
 		}
 
 		private void mnuEditDeleteFrame_Click(object sender, EventArgs e) {
+			if (Animation == null) {
+				ErrorPopUp("Please create a new animation first.");
+				return;
+			}
 
+			int frameCount = Animation.GetFrameCount();
+
+			if (frameCount <= 1) {
+				ErrorPopUp("An animation must be at least one frame long.");
+				return;
+			}
+
+			var frameDeleteForm = new FrameDeleteForm(Animation.GetFrameCount() - 1);
+			frameDeleteForm.ShowDialog();
+
+			if (frameDeleteForm.DialogResult == DialogResult.OK) {
+				Animation.DelFrame(frameDeleteForm.Index);
+
+				if (AnimationFrameIndex >= frameDeleteForm.Index) { // Removed focus frame or focus frame shifted in delete
+					AnimationFrameIndex--;
+				}
+
+				ChangeAnimationFrame(AnimationFrameIndex);
+				ChangeAnimationLayer(AnimationLayerIndex);
+			}
 		}
-
-		private void mnuToolsComPort_Click(object sender, EventArgs e) {
-			ErrorPopUp("Not implemented.");
-		}
-
-		private void mnuToolsBaudRate_Click(object sender, EventArgs e) {
-			ErrorPopUp("Not implemented.");
-		}
-
-		private void mnuToolsProgramDevice_Click(object sender, EventArgs e) {
-			ErrorPopUp("Not implemented.");
-		}
-
-		
 
 		private void buttonLayerUp_Click(object sender, EventArgs e) {
 			if (Animation == null) {
@@ -284,6 +304,30 @@ namespace LED_Cube_Utility {
 		}
 
 		private void buttonFrameTime_Click(object sender, EventArgs e) {
+			if (Animation == null) {
+				ErrorPopUp("Please create a new animation first.");
+				return;
+			}
+
+			int currentFrameDuration = (int)Animation.GetFrameDuration(AnimationFrameIndex);
+			var frameTimeForm = new FrameTimeForm(currentFrameDuration);
+			frameTimeForm.ShowDialog();
+
+			if (frameTimeForm.DialogResult == DialogResult.OK) {
+				Animation.SetFrameDuration(AnimationFrameIndex, frameTimeForm.TimeMillis);
+			}
+		}
+
+
+		private void mnuToolsComPort_Click(object sender, EventArgs e) {
+			ErrorPopUp("Not implemented.");
+		}
+
+		private void mnuToolsBaudRate_Click(object sender, EventArgs e) {
+			ErrorPopUp("Not implemented.");
+		}
+
+		private void mnuToolsProgramDevice_Click(object sender, EventArgs e) {
 			ErrorPopUp("Not implemented.");
 		}
 	}

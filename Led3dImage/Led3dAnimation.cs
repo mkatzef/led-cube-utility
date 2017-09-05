@@ -113,6 +113,19 @@ namespace Led3dImage
 		}
 
 		/// <summary>
+		/// Returns the amount of time for which the specified frame would be displayed in a looped animation.
+		/// </summary>
+		/// <param name="index">The index (in [0, animation length - 1]) of the queried frame.</param>
+		/// <returns>The amount of time (in milliseconds) for which the specified frame would be displayed.</param>
+		public uint GetFrameDuration(int index) {
+			if (index >= 0 && index < AnimationUnits.Count()) {
+				return AnimationUnits[index].durationMillis;
+			} else {
+				return 0;
+			}
+		}
+
+		/// <summary>
 		/// Returns the reference to the frame object at the given index, for direct manipulation.
 		/// </summary>
 		/// <param name="index">The index (in [0, animation length - 1]) of the frame to return.</param>

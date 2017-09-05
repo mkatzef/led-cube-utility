@@ -56,6 +56,24 @@
     <Compile Include="ErrorForm.Designer.cs">
       <DependentUpon>ErrorForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="FrameDeleteForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrameDeleteForm.Designer.cs">
+      <DependentUpon>FrameDeleteForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FrameInsertForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrameInsertForm.Designer.cs">
+      <DependentUpon>FrameInsertForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FrameTimeForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrameTimeForm.Designer.cs">
+      <DependentUpon>FrameTimeForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -72,6 +90,15 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="ErrorForm.resx">
       <DependentUpon>ErrorForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrameDeleteForm.resx">
+      <DependentUpon>FrameDeleteForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrameInsertForm.resx">
+      <DependentUpon>FrameInsertForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrameTimeForm.resx">
+      <DependentUpon>FrameTimeForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
