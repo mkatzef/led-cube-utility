@@ -11,6 +11,7 @@ using Led3dImage;
 using System.IO;
 using Newtonsoft.Json.Linq;
 using System.IO.Ports;
+using System.Threading;
 
 namespace LED_Cube_Utility {
 	public partial class MainForm : Form {
@@ -28,7 +29,10 @@ namespace LED_Cube_Utility {
 
 		SerialPort sp = null;
 		int CurrentBaudRate = DEFAULT_BAUD_RATE;
-		
+
+		public static byte START_BYTE = 0xAA;
+		public static byte END_BYTE = 0x55;
+
 
 		public MainForm() {
 			InitializeComponent();
@@ -431,9 +435,20 @@ namespace LED_Cube_Utility {
 				MessageBox.Show("Please select a COM port.");
 				return;
 			}
+			
+			sp.Open();
 
 			byte[] animationAsBytes = Animation.ToBytes();
-			sp.Write(animationAsBytes, 0, animationAsBytes.Length);
+			int animationBytesLen = animationAsBytes.Length;
+			byte[] packet = new byte[animationBytesLen + 2];
+			packet[0] = START_BYTE;
+			packet[animationBytesLen + 1] = END_BYTE;
+			animationAsBytes.CopyTo(packet, 1);
+			
+			sp.Write(packet, 0, animationBytesLen + 2);
+
+			sp.Close();
+
 			MessageBox.Show("Animation sent.");
 		}
 	}

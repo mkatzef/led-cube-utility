@@ -186,12 +186,69 @@ namespace Led3dImage
 			}
 		}
 
+		private void AddUInt32(ArrayList a, uint entry) {
+			for (int i = 3; i >= 0; i--) {
+				byte portion = (byte)((entry >> (8 * i)) & 0xFF);
+				a.Add(portion);
+			}
+		}
+
 		/// <summary>
 		/// Returns a packaged version of the animation, suitable for transfer to a 3D LED display.
 		/// </summary>
 		/// <returns>A bytes object representing the animation.</returns>
 		public byte[] ToBytes() {
-			throw (new NotImplementedException("No standard established for animation bytes representation."));
+			uint stride = Width / 8;
+			if (Width % 8 != 0) {
+				stride++;
+			}
+
+			int frameCount = GetFrameCount();
+
+			ArrayList animationAsBytes = new ArrayList();
+
+			AddUInt32(animationAsBytes, Width);
+			AddUInt32(animationAsBytes, Length);
+			AddUInt32(animationAsBytes, Height);
+			AddUInt32(animationAsBytes, (uint)frameCount);
+
+			for (int i = 0; i < frameCount; i++) {
+				AddUInt32(animationAsBytes, GetFrameDuration(i));
+			}
+
+			foreach (AnimationUnit au in AnimationUnits) {
+				Led3dFrame frame = au.frame;
+				for (int heightIndex = 0; heightIndex < Height; heightIndex++) {
+					Led3dFrameLayer layer = frame.GetLed3dFrameLayer(heightIndex);
+					for (int rowIndex = 0; rowIndex < Length; rowIndex++) {
+						int bytesCounted = 0;
+						byte newByte = 0;
+						int position = 0;
+						ArrayList buffer = new ArrayList();
+						for (int colIndex = 0; colIndex < Width; colIndex++) {
+							if (layer.GetPixel(colIndex, rowIndex)) {
+								newByte |= (byte)(1 << position);
+							}
+							position++;
+
+							if (position >= 8) {
+								buffer.Insert(0, newByte);
+								newByte = 0;
+								position = 0;
+								bytesCounted++;
+							}
+						}
+
+						if (bytesCounted < stride) {
+							buffer.Insert(0, newByte);
+						}
+
+						animationAsBytes.AddRange(buffer);
+					}
+				}
+			}
+
+			return (byte[])animationAsBytes.ToArray(typeof(byte));
 		}
 	}
 }
