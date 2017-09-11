@@ -435,8 +435,7 @@ namespace LED_Cube_Utility {
 				MessageBox.Show("Please select a COM port.");
 				return;
 			}
-			
-			sp.Open();
+
 
 			byte[] animationAsBytes = Animation.ToBytes();
 			int animationBytesLen = animationAsBytes.Length;
@@ -444,9 +443,9 @@ namespace LED_Cube_Utility {
 			packet[0] = START_BYTE;
 			packet[animationBytesLen + 1] = END_BYTE;
 			animationAsBytes.CopyTo(packet, 1);
-			
-			sp.Write(packet, 0, animationBytesLen + 2);
 
+			sp.Open();
+			sp.Write(packet, 0, animationBytesLen + 2);
 			sp.Close();
 
 			MessageBox.Show("Animation sent.");
